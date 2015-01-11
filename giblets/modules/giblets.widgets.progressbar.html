@@ -1,0 +1,711 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Giblets Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Giblets</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/giblets.html">giblets</a></li>
+  <li><a href="../modules/giblets.gizmos.html">giblets.gizmos</a></li>
+  <li><a href="../modules/giblets.gizmos.diskusage.html">giblets.gizmos.diskusage</a></li>
+  <li><a href="../modules/giblets.utils.html">giblets.utils</a></li>
+  <li><a href="../modules/giblets.utils.leaf.html">giblets.utils.leaf</a></li>
+  <li><a href="../modules/giblets.widgets.html">giblets.widgets</a></li>
+  <li><strong>giblets.widgets.progressbar</strong></li>
+</ul>
+<h2>Examples</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../examples/diskusage.lua.html">diskusage.lua</a></li>
+  <li><a href="../examples/leaf.lua.html">leaf.lua</a></li>
+  <li><a href="../examples/progressbar.lua.html">progressbar.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>giblets.widgets.progressbar</code></h1>
+<p>Progressbar widget.</p>
+<p> This progressbar is very similar to the one you get with <code>awful.widget.progressbar</code>,
+ except that it is always drawn with segments, or ticks. In addition, rather than being
+ drawn with a solid border and ticks inside the border, each tick is drawn as
+ though it is its own entity. So if a border is used, all four sides of each tick
+ will have a border.</p>
+
+<p> All the functions implemented by <code>awful.widget.progressbar</code> are also implemented
+ here. So a <a href="../modules/giblets.widgets.progressbar.html#">giblets.widgets.progressbar</a> can be a drop-in replacement for any
+ <code>awful.widget.progressbar</code>'s that are in use. Keep in mind though that
+ <a href="../modules/giblets.widgets.progressbar.html#">giblets.widgets.progressbar</a> does have additional functions so the reverse isn't
+ true.</p>
+    <h3>Info:</h3>
+    <ul>
+        <li><strong>Copyright</strong>: 2015 Nathan Lundquist</li>
+        <li><strong>Author</strong>: Nathan Lundquist (atatsu)</li>
+    </ul>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Progressbar.new">Progressbar.new ([opts])</a></td>
+	<td class="summary">Create a new progressbar widget.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Progressbar:set_background_color">Progressbar:set_background_color ([color="#484874"])</a></td>
+	<td class="summary">Set the background color of the progressbar.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Progressbar:set_border_color">Progressbar:set_border_color ([color="#8585ac"])</a></td>
+	<td class="summary">Set the progressbar's border color.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Progressbar:set_color">Progressbar:set_color ([color="#8585ac"])</a></td>
+	<td class="summary">Set the foreground color of the progressbar.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Progressbar:set_height">Progressbar:set_height ([height=12])</a></td>
+	<td class="summary">Sets the height of the progressbar.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Progressbar:set_max_value">Progressbar:set_max_value ([value=1])</a></td>
+	<td class="summary">Sets the maximum value the progressbar can handle.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Progressbar:set_ticks">Progressbar:set_ticks ([ticks=true])</a></td>
+	<td class="summary">Set the progressbar to draw ticks (<strong>non-functional</strong>).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Progressbar:set_ticks_align">Progressbar:set_ticks_align ([align="center"])</a></td>
+	<td class="summary">Set the alignment of the ticks (<strong>breaks compatibility with</strong> <code>awful.widget.progressbar</code>).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Progressbar:set_ticks_gap">Progressbar:set_ticks_gap ([gap=3])</a></td>
+	<td class="summary">Set the spacing between each tick.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Progressbar:set_ticks_size">Progressbar:set_ticks_size ([size=8])</a></td>
+	<td class="summary">Set the tick size of the progressbar.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Progressbar:set_value">Progressbar:set_value ([value=0])</a></td>
+	<td class="summary">Set the value of the progressbar.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Progressbar:set_vertical">Progressbar:set_vertical ([vertical=false])</a></td>
+	<td class="summary">Instructs the progressbar to be drawn vertically.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Progressbar:set_width">Progressbar:set_width ([width=100])</a></td>
+	<td class="summary">Sets the width of the progressbar.</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#opts">opts</a></td>
+	<td class="summary">Progressbar options.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Progressbar.new"></a>
+    <strong>Progressbar.new ([opts])</strong>
+    </dt>
+    <dd>
+    Create a new progressbar widget.
+
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">opts</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
+         Options for controlling the dimensions and look of
+   the progressbar. For a break down of all available options and their default
+   values see <a href="../modules/giblets.widgets.progressbar.html#opts">opts</a>.
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Progressbar</span></span>
+        A new Progressbar instance.
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../examples/progressbar.lua.html#">progressbar.lua</a>
+    </ul>
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> giblets = <span class="global">require</span>(<span class="string">"giblets"</span>)
+<span class="keyword">local</span> pbar = giblets.widgets.progressbar()</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "Progressbar:set_background_color"></a>
+    <strong>Progressbar:set_background_color ([color="#484874"])</strong>
+    </dt>
+    <dd>
+    Set the background color of the progressbar.
+ Or in other words, the empty color of ticks.
+
+    <h3>Signals:</h3>
+    <ul>
+         widget::updated
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">color</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         Background color.
+         (<em>default</em> "#484874")
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The progressbar instance.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">pbar:set_background_color(<span class="string">"#484874"</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "Progressbar:set_border_color"></a>
+    <strong>Progressbar:set_border_color ([color="#8585ac"])</strong>
+    </dt>
+    <dd>
+    Set the progressbar's border color.
+ Remember this only has an effect if <code>border_width</code> is non-zero.
+
+    <h3>Signals:</h3>
+    <ul>
+         widget::updated
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">color</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         Color of the border.
+         (<em>default</em> "#8585ac")
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The progressbar instance.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">pbar:set_border_color(<span class="string">"#8585ac"</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "Progressbar:set_color"></a>
+    <strong>Progressbar:set_color ([color="#8585ac"])</strong>
+    </dt>
+    <dd>
+    Set the foreground color of the progressbar.
+ In other words, the filled color of ticks.
+
+    <h3>Signals:</h3>
+    <ul>
+         widget::updated
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">color</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         Foreground color.
+         (<em>default</em> "#8585ac")
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The progressbar instance.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">pbar:set_color(<span class="string">"#8585ac"</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "Progressbar:set_height"></a>
+    <strong>Progressbar:set_height ([height=12])</strong>
+    </dt>
+    <dd>
+    Sets the height of the progressbar.
+
+    <h3>Signals:</h3>
+    <ul>
+         widget::updated
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">height</span>
+            <span class="types"><span class="type">int</span></span>
+         Height of the progressbar.
+         (<em>default</em> 12)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The progressbar instance.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">pbar:set_height(<span class="number">12</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "Progressbar:set_max_value"></a>
+    <strong>Progressbar:set_max_value ([value=1])</strong>
+    </dt>
+    <dd>
+    Sets the maximum value the progressbar can handle.
+
+    <h3>Signals:</h3>
+    <ul>
+         widget::updated
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">value</span>
+            <span class="types"><span class="type">number</span></span>
+         Max value of the progressbar.
+         (<em>default</em> 1)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The progressbar instance.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">pbar:set_max_value(<span class="number">2</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "Progressbar:set_ticks"></a>
+    <strong>Progressbar:set_ticks ([ticks=true])</strong>
+    </dt>
+    <dd>
+    Set the progressbar to draw ticks (<strong>non-functional</strong>).
+ This function doesn't do anything. It merely exists for compatibility with
+ <code>awful.widget.progressbar</code>. A giblets' progressbar is always drawn with
+ ticks, therefor they are not optional and cannot be turned off.
+
+    <h3>Signals:</h3>
+    <ul>
+         widget::updated
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">ticks</span>
+            <span class="types"><span class="type">bool</span></span>
+         This will <strong>always</strong> be <code>true</code>.
+         (<em>default</em> true)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The progressbar instance.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Progressbar:set_ticks_align"></a>
+    <strong>Progressbar:set_ticks_align ([align="center"])</strong>
+    </dt>
+    <dd>
+    Set the alignment of the ticks (<strong>breaks compatibility with</strong> <code>awful.widget.progressbar</code>).
+ Can be one of <code>center</code>, <code>top</code>, or <code>bottom</code>.
+
+    <h3>Signals:</h3>
+    <ul>
+         widget::updated
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">align</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         Alignment of the ticks.
+         (<em>default</em> "center")
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The progressbar instance.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">pbar:set_ticks_align(<span class="string">"top"</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "Progressbar:set_ticks_gap"></a>
+    <strong>Progressbar:set_ticks_gap ([gap=3])</strong>
+    </dt>
+    <dd>
+    Set the spacing between each tick.
+
+    <h3>Signals:</h3>
+    <ul>
+         widget::updated
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">gap</span>
+            <span class="types"><span class="type">int</span></span>
+         Pixel space between each tick.
+         (<em>default</em> 3)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The progressbar instance.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">pbar:set_ticks_gap(<span class="number">3</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "Progressbar:set_ticks_size"></a>
+    <strong>Progressbar:set_ticks_size ([size=8])</strong>
+    </dt>
+    <dd>
+    Set the tick size of the progressbar.
+ Can be a number representing both width and height or a table with separate width
+ and height dimentions with the keys <code>width</code> and <code>height</code> (<code>{width = 10, height = 5}</code>).
+
+    <h3>Signals:</h3>
+    <ul>
+         widget::updated
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">size</span>
+            <span class="types"><span class="type">int</span> or <a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
+         Size of each tick.
+         (<em>default</em> 8)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The progressbar instance.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <li><pre class="example">pbar:set_ticks_size(<span class="number">8</span>)</pre></li>
+        <li><pre class="example">pbar:set_ticks_size({width = <span class="number">10</span>, height = <span class="number">5</span>})</pre></li>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "Progressbar:set_value"></a>
+    <strong>Progressbar:set_value ([value=0])</strong>
+    </dt>
+    <dd>
+    Set the value of the progressbar.
+
+    <h3>Signals:</h3>
+    <ul>
+         widget::updated
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">value</span>
+            <span class="types"><span class="type">number</span></span>
+         The value between <code>0</code> and <code>1</code>.
+         (<em>default</em> 0)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The progressbar instance.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">pbar:set_value(<span class="number">0.4</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "Progressbar:set_vertical"></a>
+    <strong>Progressbar:set_vertical ([vertical=false])</strong>
+    </dt>
+    <dd>
+    Instructs the progressbar to be drawn vertically.
+
+    <h3>Signals:</h3>
+    <ul>
+         widget::updated
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">vertical</span>
+            <span class="types"><span class="type">bool</span></span>
+         Draw vertical or not.
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The progressbar instance.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">pbar:set_vertical(<span class="keyword">true</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "Progressbar:set_width"></a>
+    <strong>Progressbar:set_width ([width=100])</strong>
+    </dt>
+    <dd>
+    Sets the width of the progressbar.
+
+    <h3>Signals:</h3>
+    <ul>
+         widget::updated
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">width</span>
+            <span class="types"><span class="type">int</span></span>
+         Width of the progressbar.
+         (<em>default</em> 100)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The progressbar instance.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">pbar:set_width(<span class="number">100</span>)</pre>
+    </ul>
+
+</dd>
+</dl>
+    <h2><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "opts"></a>
+    <strong>opts</strong>
+    </dt>
+    <dd>
+    Progressbar options.
+
+    </ul>
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">width</span>
+            <span class="types"><span class="type">int</span></span>
+         Width of the progressbar.
+         (<em>default</em> 100)
+        </li>
+        <li><span class="parameter">height</span>
+            <span class="types"><span class="type">int</span></span>
+         Height of the progressbar.
+         (<em>default</em> 12)
+        </li>
+        <li><span class="parameter">vertical</span>
+            <span class="types"><span class="type">bool</span></span>
+         Draw the progressbar vertically.
+         (<em>default</em> false)
+        </li>
+        <li><span class="parameter">max_value</span>
+            <span class="types"><span class="type">number</span></span>
+         Maximum value the progressbar should support.
+         (<em>default</em> 1)
+        </li>
+        <li><span class="parameter">foreground_color</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         Foreground color of the progressbar. Or in other
+   words, the filled color of ticks.
+         (<em>default</em> "#8585ac")
+        </li>
+        <li><span class="parameter">background_color</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         Background color of the progressbar. Or in other
+   words, the empty color of ticks.
+         (<em>default</em> "#484874")
+        </li>
+        <li><span class="parameter">border_color</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         Border color (if <code>border_width</code> is non-zero) of the
+   progressbar. Again, affects the border surrounding each tick.
+         (<em>default</em> "#8585ac")
+        </li>
+        <li><span class="parameter">border_width</span>
+            <span class="types"><span class="type">int</span></span>
+         Pixel width of the border surrounding each tick.
+         (<em>default</em> 1)
+        </li>
+        <li><span class="parameter">ticks_gap</span>
+            <span class="types"><span class="type">int</span></span>
+         Spacing between each tick.
+         (<em>default</em> 3)
+        </li>
+        <li><span class="parameter">ticks_size</span>
+            <span class="types"><span class="type">int</span> or <a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
+         Size of each tick. Can be a number
+   representing both width and height or a table with separate width and height
+   dimentions with the keys <code>width</code> and <code>height</code> (<code>{width = 10, height = 5}</code>).
+         (<em>default</em> 8)
+        </li>
+        <li><span class="parameter">ticks_align</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         Set the alignment of the ticks. Can be one of
+   <code>center</code>, <code>top</code>, <code>bottom</code>.
+         (<em>default</em> "center")
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2015-01-11 08:44:08 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

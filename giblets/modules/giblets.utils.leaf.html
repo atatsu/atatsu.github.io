@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Giblets Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Giblets</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/giblets.html">giblets</a></li>
+  <li><a href="../modules/giblets.gizmos.html">giblets.gizmos</a></li>
+  <li><a href="../modules/giblets.gizmos.diskusage.html">giblets.gizmos.diskusage</a></li>
+  <li><a href="../modules/giblets.utils.html">giblets.utils</a></li>
+  <li><strong>giblets.utils.leaf</strong></li>
+  <li><a href="../modules/giblets.widgets.html">giblets.widgets</a></li>
+  <li><a href="../modules/giblets.widgets.progressbar.html">giblets.widgets.progressbar</a></li>
+</ul>
+<h2>Examples</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../examples/diskusage.lua.html">diskusage.lua</a></li>
+  <li><a href="../examples/leaf.lua.html">leaf.lua</a></li>
+  <li><a href="../examples/progressbar.lua.html">progressbar.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>giblets.utils.leaf</code></h1>
+<p>Leaf utility.</p>
+<p> TODO: write an actual description</p>
+    <h3>Info:</h3>
+    <ul>
+        <li><strong>Copyright</strong>: 2015 Nathan Lundquist</li>
+        <li><strong>Author</strong>: Nathan Lundquist (atatsu)</li>
+    </ul>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Leaf.new">Leaf.new (app[, opts])</a></td>
+	<td class="summary">Create a new Leaf.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Leaf:toggle">Leaf:toggle ()</a></td>
+	<td class="summary">Toggle the leaf.</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#opts">opts</a></td>
+	<td class="summary">Leaf options.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Leaf.new"></a>
+    <strong>Leaf.new (app[, opts])</strong>
+    </dt>
+    <dd>
+    Create a new Leaf.
+
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">app</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         Application to execute.
+        </li>
+        <li><span class="parameter">opts</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
+         Options for controlling the look and behavior of the Leaf. For a
+   break down of all available options and their defaults see <a href="../modules/giblets.utils.leaf.html#opts">opts</a>.
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Leaf</span></span>
+        A new Leaf instance.
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../examples/leaf.lua.html#">leaf.lua</a>
+    </ul>
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> termleaf = giblets.utils.leaf(<span class="string">"urxvt"</span>)
+ termleaf:toggle()</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "Leaf:toggle"></a>
+    <strong>Leaf:toggle ()</strong>
+    </dt>
+    <dd>
+    Toggle the leaf.
+ Show the leaf on the active screen/tag. If it is already shown, hide it.
+ If the leaf is already visible, and this is called from a tag the leaf is
+ not currently on, will simply move the leaf to the new active tag.
+
+    </ul>
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The leaf instance.
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../examples/leaf.lua.html#">leaf.lua</a>
+    </ul>
+
+
+</dd>
+</dl>
+    <h2><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "opts"></a>
+    <strong>opts</strong>
+    </dt>
+    <dd>
+    Leaf options.
+
+    </ul>
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">position</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         Position of the leaf. Can be one of "top", "bottom",
+   "left", or "right".
+         (<em>default</em> "bottom")
+        </li>
+        <li><span class="parameter">height</span>
+            <span class="types"><span class="type">number</span></span>
+         Height of the Leaf application. Can be an absolute pixel
+   size or a percentage of the screen if between <code>0</code> and <code>1</code>.
+         (<em>default</em> 0.3)
+        </li>
+        <li><span class="parameter">width</span>
+            <span class="types"><span class="type">number</span></span>
+         Width of the Leaf application. Can be an absolute pixel size
+   or a percentage of the screen if between <code>0</code> and <code>1</code>.
+         (<em>default</em> 0.5)
+        </li>
+        <li><span class="parameter">sticky</span>
+            <span class="types"><span class="type">bool</span></span>
+         Whether the leaf should show up on all tags or not.
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2015-01-11 08:44:08 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
