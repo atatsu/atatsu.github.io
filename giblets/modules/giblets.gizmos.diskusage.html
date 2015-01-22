@@ -60,7 +60,9 @@
 
 <h1>Module <code>giblets.gizmos.diskusage</code></h1>
 <p>DiskUsage gizmo.</p>
-<p> TODO: write an actual description</p>
+<p> Displays an icon that when clicked shows a floating wibox populated with a
+ configurable set of mount points and their usage stats. The icon itself is
+ a <code>wibox.widget</code> so all the standard functions are available.</p>
     <h3>Info:</h3>
     <ul>
         <li><strong>Copyright</strong>: 2015 Nathan Lundquist</li>
@@ -72,27 +74,59 @@
 <table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#DiskUsage.new">DiskUsage.new (icon, mounts[, opts])</a></td>
-	<td class="summary">Create a new DiskUsage gizmo.</td>
+	<td class="summary">Create a new diskusage gizmo.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#DiskUsage:buttons">DiskUsage:buttons (keys)</a></td>
-	<td class="summary">Set the mouse and/or button bindings for the widget.</td>
+	<td class="name" nowrap><a href="#DiskUsage:hide">DiskUsage:hide ()</a></td>
+	<td class="summary">Hide the diskusage window.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#DiskUsage:refresh">DiskUsage:refresh ()</a></td>
-	<td class="summary">Refreshes the stats of all mount points and updates their corresponding widgets.</td>
+	<td class="summary">Refreshes the mount point stats.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#DiskUsage:set_background_color">DiskUsage:set_background_color (color)</a></td>
+	<td class="summary">Set the background color of the diskusage window.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#DiskUsage:set_border_color">DiskUsage:set_border_color ([color="#000000"])</a></td>
+	<td class="summary">Set the border color of the diskusage window.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#DiskUsage:set_border_width">DiskUsage:set_border_width ([width=0])</a></td>
+	<td class="summary">Set the border width of the diskusage window.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#DiskUsage:set_foreground_color">DiskUsage:set_foreground_color (color)</a></td>
+	<td class="summary">Set the foreground color of the diskusage window.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#DiskUsage:set_progressbar">DiskUsage:set_progressbar ([progressbar=giblets.widgets.progressbar])</a></td>
+	<td class="summary">Set the type of progressbar that gets used for representing the use % of the mount point.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#DiskUsage:set_stats_format">DiskUsage:set_stats_format ([format="$1 -- $4 free of $2])</a></td>
+	<td class="summary">Set the format of the stats text display.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#DiskUsage:set_width">DiskUsage:set_width ([width=400])</a></td>
+	<td class="summary">Set the width of the diskusage window.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#DiskUsage:show">DiskUsage:show ()</a></td>
+	<td class="summary">Show the diskusage window.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#DiskUsage:toggle">DiskUsage:toggle ()</a></td>
-	<td class="summary">Shows the widget if it is hidden, or hides it if it is shown.</td>
+	<td class="summary">Show the diskusage window if it is hidden, or hide it if it is shown.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#DiskUsage:tune_progressbars">DiskUsage:tune_progressbars (callback)</a></td>
+	<td class="summary">Allows you to tweak the properties of the diskusage progressbars.</td>
 	</tr>
 </table>
 <h2><a href="#Tables">Tables</a></h2>
 <table class="function_list">
-	<tr>
-	<td class="name" nowrap><a href="#default_header_labels">default_header_labels</a></td>
-	<td class="summary">Default header labels.</td>
-	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#opts">opts</a></td>
 	<td class="summary">DiskUsage options.</td>
@@ -111,28 +145,28 @@
     <strong>DiskUsage.new (icon, mounts[, opts])</strong>
     </dt>
     <dd>
-    Create a new DiskUsage gizmo.
+    Create a new diskusage gizmo.
 
     </ul>
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">icon</span>
-            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
-         Icon to use.
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a> or <span class="type">cairoimage</span></span>
+         Either the path to an image file or a cairo image surface.
         </li>
         <li><span class="parameter">mounts</span>
             <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
-         An array of mount points to monitor or an array of mount point/label pairs.
-   If just an array of mount points the mount points themselves will be used as the label.
-   The order in which mount points are supplied is the order in which they're displayed.
+         A table of tables containing the keys <code>mount</code> and <code>label</code>, with
+   <code>label</code> being optional. If no <code>label</code> is supplied the mount point itself will be
+   used. For instance,
+   <code>{{mount = &quot;/home/me&quot;, label = &quot;home&quot;}, {mount = &quot;/var&quot;, label = &quot;var&quot;}}</code>.
         </li>
         <li><span class="parameter">opts</span>
             <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
-         Options for controlling the look and feel of the DiskUsage widget.
-   Configuration as well as styling options can be supplied here. Any styling options specified
-   here override theme settings. For a break down of all available options as well as their
-   theme counterparts see <a href="../modules/giblets.gizmos.diskusage.html#opts">opts</a>.
+         Options for controlling the look of the diskusage gizmo. For a break
+   down of all available options and their default values see <a href="../modules/giblets.gizmos.diskusage.html#opts">opts</a>. There are
+   corresponding methods for each option, if you'd rather use those.
          (<em>optional</em>)
         </li>
     </ul>
@@ -144,6 +178,14 @@
         A new DiskUsage instance.
     </ol>
 
+    <h3>Raises:</h3>
+
+<ul>
+    <li>'mounts' argument must be a table</li>
+    <li>Invalid 'mounts' argument supplied</li>
+    <li>Not a progressbar constructor</li>
+</ul>
+
 
     <h3>See also:</h3>
     <ul>
@@ -152,53 +194,38 @@
 
     <h3>Usage:</h3>
     <ul>
-        <li><pre class="example"><span class="keyword">local</span> du = giblets.gizmos.diskusage(beautiful.du_icon, {<span class="string">"/home"</span>, <span class="string">"/var"</span>})</pre></li>
-        <li><pre class="example"> <span class="keyword">local</span> du = giblets.gizmos.diskusage(
-   beautiful.du_icon,
-   {{mount = <span class="string">"/home"</span>, label = <span class="string">"Home"</span>}, {mount = <span class="string">"/var"</span>, label = <span class="string">"Var"</span>}}
- )</pre></li>
+        <pre class="example"> <span class="keyword">local</span> giblets = <span class="global">require</span>(<span class="string">"giblets"</span>)
+ <span class="keyword">local</span> du = giblets.gizmos.diskusage(
+  beautiful.du_icon,
+  {{mount = <span class="string">"/home"</span>, label = <span class="string">"home"</span>}, {mount = <span class="string">"/var"</span>, label = <span class="string">"var"</span>}}
+ )</pre>
     </ul>
 
 </dd>
     <dt>
-    <a name = "DiskUsage:buttons"></a>
-    <strong>DiskUsage:buttons (keys)</strong>
+    <a name = "DiskUsage:hide"></a>
+    <strong>DiskUsage:hide ()</strong>
     </dt>
     <dd>
-    Set the mouse and/or button bindings for the widget.
- If this is not explicitly called a default is used, left-clicking the
- widget shows/hides the disk usage stats. This is called by <a href="../modules/giblets.gizmos.diskusage.html#DiskUsage.new">new</a> to set up
- the default bindings. If you wish to override simply use it after you have
- a DiskUsage instance.
+    Hide the diskusage window.
 
-    </ul>
-
-    <h3>Parameters:</h3>
+    <h3>Signals:</h3>
     <ul>
-        <li><span class="parameter">keys</span>
-            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
-         A table with one or several button objects (from <code>awful.button</code>).
-        </li>
+         property::visible
     </ul>
+
 
     <h3>Returns:</h3>
     <ol>
 
-        The DiskUsage instance.
+        The diskusage instance.
     </ol>
 
 
-    <h3>See also:</h3>
-    <ul>
-         <a href="../examples/diskusage.lua.html#">diskusage.lua</a>
-    </ul>
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example"> <span class="keyword">local</span> du = giblets.gizmos.diskusage(beautiful.du_icon, {<span class="string">"/home"</span>})
- du:buttons(
-   awful.button({}, <span class="number">1</span>, <span class="keyword">function</span>() self:toggle() <span class="keyword">end</span>)
- )</pre>
+        <pre class="example">du:hide()</pre>
     </ul>
 
 </dd>
@@ -207,9 +234,7 @@
     <strong>DiskUsage:refresh ()</strong>
     </dt>
     <dd>
-    Refreshes the stats of all mount points and updates their corresponding widgets.
- Refresh all the mount point stats and update their corresponding widgets. This is
- automatically called by <a href="../modules/giblets.gizmos.diskusage.html#DiskUsage:toggle">toggle</a>.
+    Refreshes the mount point stats.
 
     </ul>
 
@@ -217,11 +242,298 @@
     <h3>Returns:</h3>
     <ol>
 
-        The DiskUsage instance.
+        The diskusage instance.
     </ol>
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">du:refresh()</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "DiskUsage:set_background_color"></a>
+    <strong>DiskUsage:set_background_color (color)</strong>
+    </dt>
+    <dd>
+    Set the background color of the diskusage window.
+ Since the diskusage "window" is merely a wibox the background color will
+ default to <code>bg_normal</code> if set in your theme file.
+
+    <h3>Signals:</h3>
+    <ul>
+         property::background_color
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">color</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         Background color of the diskusage window.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The diskusage instance.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">du:set_background_color(<span class="string">"#222222"</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "DiskUsage:set_border_color"></a>
+    <strong>DiskUsage:set_border_color ([color="#000000"])</strong>
+    </dt>
+    <dd>
+    Set the border color of the diskusage window.
+
+    <h3>Signals:</h3>
+    <ul>
+         property::border_color
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">color</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         Color of the border.
+         (<em>default</em> "#000000")
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The diskusage instance.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">du:set_border_color(<span class="string">"#ff0000"</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "DiskUsage:set_border_width"></a>
+    <strong>DiskUsage:set_border_width ([width=0])</strong>
+    </dt>
+    <dd>
+    Set the border width of the diskusage window.
+
+    <h3>Signals:</h3>
+    <ul>
+         property::border_width
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">width</span>
+            <span class="types"><span class="type">int</span></span>
+         Pixel width of the border.
+         (<em>default</em> 0)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The diskusage instance.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">du:set_border_width(<span class="number">2</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "DiskUsage:set_foreground_color"></a>
+    <strong>DiskUsage:set_foreground_color (color)</strong>
+    </dt>
+    <dd>
+    Set the foreground color of the diskusage window.
+ Since the diskusage "window" is merely a wibox the foreground color will
+ default to <code>fg_normal</code> if set in your theme file.
+
+    <h3>Signals:</h3>
+    <ul>
+         property::foreground_color
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">color</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         Foreground color of the diskusage window.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The diskusage instance.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">du:set_foreground_color(<span class="string">"ffffff"</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "DiskUsage:set_progressbar"></a>
+    <strong>DiskUsage:set_progressbar ([progressbar=giblets.widgets.progressbar])</strong>
+    </dt>
+    <dd>
+    Set the type of progressbar that gets used for representing the use % of the mount point.
+ Remember this must be a progressbar constructor. Not an instantiated progressbar.
+
+    <h3>Signals:</h3>
+    <ul>
+         property::progressbar
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">progressbar</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
+         The progressbar constructor supporting
+   all functions provided by <code>awful.widget.progressbar</code>.
+         (<em>default</em> giblets.widgets.progressbar)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The diskusage instance.
+    </ol>
+
+    <h3>Raises:</h3>
+    Not a progressbar constructor
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">du:set_progressbar(awful.widget.progressbar)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "DiskUsage:set_stats_format"></a>
+    <strong>DiskUsage:set_stats_format ([format="$1 -- $4 free of $2])</strong>
+    </dt>
+    <dd>
+    Set the format of the stats text display. <br/>
+ The available replacement tokens and their corresponding stat is as follows:
+   * <code>$1</code> - Mount point (or label if a label was specified
+   * <code>$2</code> - Total size of the mount point
+   * <code>$3</code> - Used amount of the mount point
+   * <code>$4</code> - Available space remaining on the mount point
+
+    <h3>Signals:</h3>
+    <ul>
+         property::stats_format
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">format</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         Format string.
+         (<em>default</em> "$1 -- $4 free of $2)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The diskusage instance.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">du:set_stats_format(<span class="string">"$1 - $3/$2 ($4)"</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "DiskUsage:set_width"></a>
+    <strong>DiskUsage:set_width ([width=400])</strong>
+    </dt>
+    <dd>
+    Set the width of the diskusage window.
+
+    <h3>Signals:</h3>
+    <ul>
+         property::width
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">width</span>
+            <span class="types"><span class="type">int</span></span>
+         Pixel width of the diskusage window.
+         (<em>default</em> 400)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The diskusage instance.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">du:set_width(<span class="number">600</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "DiskUsage:show"></a>
+    <strong>DiskUsage:show ()</strong>
+    </dt>
+    <dd>
+    Show the diskusage window.
+
+    <h3>Signals:</h3>
+    <ul>
+         property::visible
+    </ul>
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The diskusage instance.
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">du:show()</pre>
+    </ul>
 
 </dd>
     <dt>
@@ -229,59 +541,74 @@
     <strong>DiskUsage:toggle ()</strong>
     </dt>
     <dd>
-    Shows the widget if it is hidden, or hides it if it is shown.
- In addition to hiding/showing the widget this will update the
- current stats for each monitored mount point (by use of <a href="../modules/giblets.gizmos.diskusage.html#DiskUsage:refresh">refresh</a>).
- With the default keybindings this is called when the widget icon is
- left-clicked.
+    Show the diskusage window if it is hidden, or hide it if it is shown.
 
+    <h3>Signals:</h3>
+    <ul>
+         property::visible
     </ul>
 
 
     <h3>Returns:</h3>
     <ol>
 
-        The DiskUsage instance.
+        The diskusage instance.
     </ol>
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">du:toggle()</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "DiskUsage:tune_progressbars"></a>
+    <strong>DiskUsage:tune_progressbars (callback)</strong>
+    </dt>
+    <dd>
+    Allows you to tweak the properties of the diskusage progressbars.
+ Invokes the provided callback for every configured mount point, passing the
+ progressbar and mount path, respectively.
+
+    </ul>
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">func</span></span>
+         A callback function that the progressbar widget and mount path
+   will be passed to. Callback signature: <code>function(progressbar, mount_path)</code>.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The diskusage instance.
+    </ol>
+
+    <h3>Raises:</h3>
+    'callback' must be a function
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"> du:tune_progressbars(<span class="keyword">function</span>(progressbar, mount_path)
+   <span class="keyword">if</span> mount_path == <span class="string">"/home"</span> <span class="keyword">then</span>
+     progressbar:set_background_color(<span class="string">"#ff0000"</span>)
+   <span class="keyword">else</span>
+     progressbar:set_background_color(<span class="string">"#000000"</span>)
+   <span class="keyword">end</span>
+ <span class="keyword">end</span>)</pre>
+    </ul>
 
 </dd>
 </dl>
     <h2><a name="Tables"></a>Tables</h2>
 
     <dl class="function">
-    <dt>
-    <a name = "default_header_labels"></a>
-    <strong>default_header_labels</strong>
-    </dt>
-    <dd>
-    Default header labels.
-
-    </ul>
-
-    <h3>Fields:</h3>
-    <ul>
-        <li><span class="parameter">mount_point</span>
-        &lt;b&gt;Mount point&lt;/b&gt;
-        </li>
-        <li><span class="parameter">size</span>
-        &lt;b&gt;Size&lt;/b&gt;
-        </li>
-        <li><span class="parameter">avail</span>
-        &lt;b&gt;Avail&lt;/b&gt;
-        </li>
-        <li><span class="parameter">used</span>
-        &lt;b&gt;Used&lt;/b&gt;
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
     <dt>
     <a name = "opts"></a>
     <strong>opts</strong>
@@ -293,131 +620,53 @@
 
     <h3>Fields:</h3>
     <ul>
-        <li><span class="parameter">enable_header</span>
-            <span class="types"><span class="type">bool</span></span>
-         Display column headers.
-         (<em>default</em> true)
-        </li>
-        <li><span class="parameter">header_labels</span>
-            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
-         A table of header labels used for columns if they're
-   enabled. Pango markup is supported. See the <a href="../modules/giblets.gizmos.diskusage.html#default_header_labels">default_header_labels</a> for structure
-   and defaults.
-        </li>
-        <li><span class="parameter">window_width</span>
+        <li><span class="parameter">width</span>
             <span class="types"><span class="type">int</span></span>
-         <code>theme.giblets.diskusage.window_width</code></p>
-
-<p>   Controls the width of the DiskUsage widget window.
+         Width of the diskusage window.
          (<em>default</em> 400)
         </li>
-        <li><span class="parameter">window_margins</span>
-            <span class="types"><span class="type">int</span> or <a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
-         <code>theme.giblets.diskusage.window_margins</code></p>
-
-<p>   Margins for the DiskUsage widget outer window.
-   Can be a single number representing all margins or a table specifying
-   each margin. If a table of individual margins, valid keys are:</p>
-<pre><code> * top
- * bottom
- * left
- * right
-</code></pre>
-<p>  For example: <code>{top = 10, right = 5, bottom = 10, left = 5}</code></p>
-
-<p>  <em>Note</em>: If any keys are specified, those left unspecified are assumed
-  to have a value of <code>0</code>.
-         (<em>default</em> 10)
+        <li><span class="parameter">progressbar</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
+         The constructor for a progressbar widget
+   supporting the functions provided by <code>awful.widget.progressbar</code>. This is used to represent
+   the use % of the mount point.
+         (<em>default</em> giblets.widgets.progressbar)
         </li>
-        <li><span class="parameter">window_border_width</span>
+        <li><span class="parameter">border_width</span>
             <span class="types"><span class="type">int</span></span>
-         <code>theme.giblets.diskusage.window_border_width</code></p>
-
-<p>   Sets the width of the border surrounding the DiskUsage window.
-         (<em>default</em> 1)
+         Sets the border width of the diskusage window.
+         (<em>default</em> 0)
         </li>
-        <li><span class="parameter">window_border_color</span>
+        <li><span class="parameter">border_color</span>
             <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
-         <code>theme.giblets.diskusage.window_border_color</code>
-   Sets the color of the border surrounding the DiskUsage window.
+         Sets the color of the diskusage window border.
          (<em>default</em> "#000000")
         </li>
-        <li><span class="parameter">header_margins</span>
-            <span class="types"><span class="type">int</span> or <a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
-         <code>theme.giblets.diskusage.header_margins</code></p>
-
-<p>   Margins surrounding the headers row. Can be a single number representing
-   all margins or a table specifying each margin. If a table of individual
-   margins, valid keys are:</p>
-<pre><code> * top
- * bottom
- * left
- * right
-</code></pre>
-<p>   For example: <code>{top = 10, right = 5, bottom = 10, left = 5}</code></p>
-
-<p>   <em>Note</em>: If any keys are specified, those left unspecified are assumed
-   to have a value of <code>0</code>.
-         (<em>default</em> {bottom = 5})
-        </li>
-        <li><span class="parameter">progressbar_height</span>
-            <span class="types"><span class="type">int</span></span>
-         <code>theme.giblets.diskusage.progressbar_height</code></p>
-
-<p>   Controls the height of the progressbar that is used to represent the % used
-   of the mount point.
-         (<em>default</em> 12)
-        </li>
-        <li><span class="parameter">progressbar_margins</span>
-            <span class="types"><span class="type">int</span> or <a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
-         <code>theme.giblets.diskusage.progressbar_margins</code></p>
-
-<p>   Sets the margins surrounding the progressbar. Can be a single number representing all
-   margins or a table specifying each margin. If a table of individual margins, valid
-   keys are:</p>
-<pre><code> * top
- * bottom
- * left
- * right
-</code></pre>
-<p>   For example: <code>{top = 10, right = 5, bottom = 10, left = 5}</code></p>
-
-<p>   <em>Note</em>: If any keys are specified, those left unspecified are assumed to have
-   a value of <code>0</code>.
-         (<em>default</em> {top = 3})
-        </li>
-        <li><span class="parameter">progressbar_color</span>
+        <li><span class="parameter">background_color</span>
             <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
-         <code>theme.giblets.diskusage.progressbar_color</code></p>
-
-<p>   Sets the color of the progressbar.
-         (<em>default</em> "#d509b5")
+         Sets the background color of the diskusage window.
+         (<em>optional</em>)
         </li>
-        <li><span class="parameter">progressbar_border_color</span>
+        <li><span class="parameter">foreground_color</span>
             <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
-         <code>theme.giblets.diskusage.progressbar_border_color</code></p>
-
-<p>   Sets the color of the progressbar border.
-         (<em>default</em> "#afd700")
+         Sets the foreground color of the diskusage window.
+         (<em>optional</em>)
         </li>
-        <li><span class="parameter">mp_container_margins</span>
-            <span class="types"><span class="type">int</span> or <a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
-         <code>theme.giblets.diskusage.mp_container_margins</code></p>
+        <li><span class="parameter">stats_format</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         Sets the format of the
+   stats text display. The available replacement tokens and their corresponding
+   stat is as follows:</p>
 
-<p>   Sets the margins surrounding each mount point container (the container encompasses all
-   the sub-widgets specific to a mount point, so the mount label text, size text, used text,
-   avail text, and progressbar). Can be a single number representing all margins or a table
-   specifying each margin. If a table of individual margins, valid keys are:</p>
-<pre><code> * top
- * bottom
- * left
- * right
-</code></pre>
-<p>   For example: <code>{top = 10, right = 5, bottom = 10, left = 5}</code></p>
+<ul>
+    <li><code>$1</code> - Mount point (or label if a label was specified</li>
+    <li><code>$2</code> - Total size of the mount point</li>
+    <li><code>$3</code> - Used amount of the mount point</li>
+    <li><code>$4</code> - Available space remaining on the mount point</li>
+</ul>
 
-<p>   <em>Note</em>: If any keys are specified, those left unspecified are assumed to have
-   a value of <code>0</code>.
-         (<em>default</em> {bottom = 7})
+<p>   (<em>default</em> "$1 -- $4 free of $2, $3 used")
+         (<em>optional</em>)
         </li>
     </ul>
 
@@ -433,7 +682,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
-<i style="float:right;">Last updated 2015-01-11 08:44:08 </i>
+<i style="float:right;">Last updated 2015-01-21 21:37:39 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>
